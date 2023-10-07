@@ -19,7 +19,7 @@ class ContactController extends Controller
     }
     public function index()
     {
-        return Inertia::render('Contacts', [
+        return Inertia::render('Contact/Contacts', [
             'contacts' => $this->contactRepository->getAll()
         ]);
     }
@@ -31,17 +31,15 @@ class ContactController extends Controller
         ]);
     }
 
-    public function show(Request $request)
-    {
-        $contact = $this->contactRepository->getById($request->id);
-       
-        return Inertia::render('Contacts', [
-            'contacts' => $this->contactRepository->getAll(),
+    public function show($id)
+    {  
+        return Inertia::render('Contact/Edit', [
+            'contact' => $this->contactRepository->getById($id),
         ]);
     }
-    public function apishow(Request $request)
+    public function apishow($id)
     {
-        return response($this->contactRepository->getbyId($request->id, true));
+        return response($this->contactRepository->getById($id, true));
     }
     public function store(ContactRequest $request)
     {

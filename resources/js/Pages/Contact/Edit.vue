@@ -8,7 +8,7 @@ import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm, Link } from '@inertiajs/vue3';
 import axios from 'axios';
 
-const props = defineProps(['contacts', 'contactCount']);
+const props = defineProps(['contact', 'contactCount']);
 
 const form = useForm({
     name:'',
@@ -66,71 +66,7 @@ const submit = () => {
                 <InputLabel for="zip" value="Zip Code" />
                 <TextInput type="text" name="zip" placeholder="zip" v-model="form.zip" />
             </div>
-            <PrimaryButton>
-                    Log in
-            </PrimaryButton>
+            <PrimaryButton>Edit</PrimaryButton>
         </form>
     </div>
-
-    <table>
-        <thead>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>Region/State</th>
-            <th>Country</th>
-            <th>Zip</th>
-            <th>Actions</th>
-        </thead>
-        <tr v-for="contact in contacts">
-            <td>{{ contact.name }}</td>
-            <td>{{ contact.email }}</td>
-            <td>{{ contact.phone }}</td>
-            <td>{{ contact.address }}</td>
-            <td>{{ contact.city }}</td>
-            <td>{{ contact.region_state }}</td>
-            <td>{{ contact.country }}</td>
-            <td>{{ contact.zip }}</td>
-            <td>
-                <Link :href="route('contact.show', {id:contact.id})"> View </Link> 
-                <Link :href="route('contact.delete', {id:contact.id})" method="delete"> Delete </Link>
-            </td>
-        </tr>
-    </table>
 </template>
-
-<script>
-// export default {
-//   data() {
-//     return {
-//       store: {
-//         name:'',
-//         email:'',
-//         phone:'',
-//         address:'',
-//         city:'',
-//         region_state:'',
-//         country:'',
-//         zip:''
-//       },
-//       //componentKey: 0,
-//     }
-//   },
-//   methods: {
-//     submit: async function() {
-//         await axios.post('contacts', this.store)
-//         .then(function(res) {
-//             forceRerender();
-//         })
-//         .catch(function(err) {
-//             console.log(err);
-//         });
-//     },
-//     forceRerender(){
-//         this.componentKey += 1;
-//     }
-//   }
-// }
-</script>
