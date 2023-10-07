@@ -57,4 +57,10 @@ class ContactController extends Controller
         $this->contactRepository->update($id, $request->all());
         return redirect('/contacts/'.$id);
     }
+
+    public function delete($id)
+    {
+        $this->contactRepository->delete($id);
+        return redirect('/contacts');
+    }
 }

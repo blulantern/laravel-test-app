@@ -12,7 +12,7 @@ class ContactRepository Implements ContactRepositoryInterface{
     }
     public function delete($id)
     {
-        return Contact::create($id);
+        return Contact::destroy($id);
     }
     public function getAll() 
     {

@@ -5,7 +5,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, Link } from '@inertiajs/vue3';
 import axios from 'axios';
 
 const props = defineProps(['contacts', 'contactCount']);
@@ -23,7 +23,7 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('contact.store'), {
-        onFinish: () => forceRerender(),
+        //onFinish: () => forceRerender(),
     });
 };
 </script>
@@ -60,7 +60,7 @@ const submit = () => {
             </div>
             <div>
                 <InputLabel for="country" value="Country" />
-                <TextInput type="text" name="country" placeholder="country" v-model="form.country" />
+                <TextInput type="text" name="country" placeholder="country" v-model="form.country" maxlength="2" />
             </div>
             <div>
                 <InputLabel for="zip" value="Zip Code" />
@@ -82,6 +82,7 @@ const submit = () => {
             <th>Region/State</th>
             <th>Country</th>
             <th>Zip</th>
+            <th>Actions</th>
         </thead>
         <tr v-for="contact in contacts">
             <td>{{ contact.name }}</td>
@@ -92,7 +93,10 @@ const submit = () => {
             <td>{{ contact.region_state }}</td>
             <td>{{ contact.country }}</td>
             <td>{{ contact.zip }}</td>
-            <td></td>
+            <td>
+                <Link :href="route('contact.show', {id:contact.id})"> View </Link> 
+                <Link :href="route('contact.delete', {id:contact.id})" method="delete"> Delete </Link>
+            </td>
         </tr>
     </table>
 </template>
