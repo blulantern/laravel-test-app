@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(ContactController::class)->group(function () {
-    Route::get('/contacts', 'index');
+    Route::get('/contacts', 'index')->name('contact.index');
     Route::get('/contacts/{id}', 'show')->name('contact.show');
     Route::post('/contacts', 'store')->name('contact.store');
     Route::put('/contacts/{id}', 'update')->name('contact.update');

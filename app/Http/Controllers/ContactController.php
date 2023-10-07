@@ -53,7 +53,7 @@ class ContactController extends Controller
         $validated = $request->validated();
         $id = $request->route('id');
         $this->contactRepository->update($id, $request->all());
-        return redirect('/contacts/'.$id);
+        return redirect('/contacts');
     }
 
     public function delete($id)

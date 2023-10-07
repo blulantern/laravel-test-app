@@ -25,7 +25,7 @@ class ContactRepository Implements ContactRepositoryInterface{
     }
     public function update($id, $data) 
     {
-        return Contact::create($data);
+        return Contact::whereId($id)->update($data);
     }
 
     public function count()

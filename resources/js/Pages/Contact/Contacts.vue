@@ -1,12 +1,8 @@
 <script setup>
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm, Link } from '@inertiajs/vue3';
-import axios from 'axios';
 
 const props = defineProps(['contacts', 'contactCount']);
 
@@ -26,6 +22,16 @@ const submit = () => {
         //onFinish: () => forceRerender(),
     });
 };
+
+const deleteContact = (contact) => {
+    form.delete(route('contact.delete', contact.id), {
+        
+    });
+}
+
+const view = (contact) => {
+    window.location.href = '/contacts/'+contact.id;
+}
 </script>
 
 <template>
@@ -92,8 +98,8 @@ const submit = () => {
             <td>{{ contact.country }}</td>
             <td>{{ contact.zip }}</td>
             <td>
-                <Link :href="route('contact.show', {id:contact.id})"> View </Link> 
-                <Link :href="route('contact.delete', {id:contact.id})" method="delete"> Delete </Link>
+                <PrimaryButton @click="view(contact)" > View </PrimaryButton> 
+                <PrimaryButton @click="deleteContact(contact)"> Delete </PrimaryButton>
             </td>
         </tr>
     </table>

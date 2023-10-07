@@ -1,31 +1,32 @@
 <script setup>
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, useForm, Link } from '@inertiajs/vue3';
-import axios from 'axios';
 
 const props = defineProps(['contact', 'contactCount']);
 
 const form = useForm({
-    name:'',
-    email:'',
-    phone:'',
-    address:'',
-    city:'',
-    region_state:'',
-    country:'',
-    zip:''
+    id: props.contact.id,
+    name: props.contact.name,
+    email: props.contact.email,
+    phone: props.contact.phone,
+    address: props.contact.address,
+    city: props.contact.city,
+    region_state: props.contact.region_state,
+    country: props.contact.country,
+    zip: props.contact.zip
 });
 
 const submit = () => {
-    form.post(route('contact.store'), {
+    form.put(route('contact.update', {id:props.contact.id}), {
         //onFinish: () => forceRerender(),
     });
 };
+
+const cancel = () => {
+    window.location.href = '/contacts';
+}
 </script>
 
 <template>
@@ -36,7 +37,7 @@ const submit = () => {
         <form @submit.prevent="submit">
             <div>
                 <InputLabel for="name" value="Name" />
-                <TextInput type="text" name="name" placeholder="name" v-model="form.name" />
+                <TextInput type="text" name="name" placeholder="name" v-model="form.name"/>
             </div>
             <div>
                 <InputLabel for="email" value="Email" />
@@ -48,11 +49,11 @@ const submit = () => {
             </div>
             <div>
                 <InputLabel for="address" value="Address" />
-                <TextInput type="text" name="address" placeholder="address" v-model="form.address" />
+                <TextInput type="text" name="address" placeholder="address" v-model="form.address"/>
             </div>
             <div>
                 <InputLabel for="city" value="City" />
-                <TextInput type="text" name="city" placeholder="city" v-model="form.city" />
+                <TextInput type="text" name="city" placeholder="city" v-model="form.city"/>
             </div>
             <div>
                 <InputLabel for="statee" value="State" />
@@ -64,9 +65,9 @@ const submit = () => {
             </div>
             <div>
                 <InputLabel for="zip" value="Zip Code" />
-                <TextInput type="text" name="zip" placeholder="zip" v-model="form.zip" />
+                <TextInput type="text" name="zip" placeholder="zip" v-model="form.zip"/>
             </div>
-            <PrimaryButton>Edit</PrimaryButton>
+            <PrimaryButton>Edit</PrimaryButton><PrimaryButton @click="cancel">Cancel</PrimaryButton>
         </form>
     </div>
 </template>

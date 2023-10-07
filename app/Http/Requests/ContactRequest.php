@@ -21,11 +21,23 @@ class ContactRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required',
-            'email' => 'required|unique:contacts|email',
-            'phone' => 'required',
-            'region_state' => 'size:2|nullable'
-        ];
+        if ($this->isMethod('post')) {
+            return [
+                'name' => 'required',
+                'email' => 'required|unique:contacts|email',
+                'phone' => 'required',
+                'region_state' => 'size:2|nullable'
+            ];
+        }
+
+        if ($this->isMethod('put')) {
+            return [
+                'name' => 'required',
+                'email' => 'required|email',
+                'phone' => 'required',
+                'region_state' => 'size:2|nullable'
+            ];
+        }
+
     }
 }
