@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Interfaces\ContactRepositoryInterface;
+use App\Repositories\ContactRepository;
 use Illuminate\Support\Facades;
 use Illuminate\Support\ServiceProvider;
+use Inertia\Inertia;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -21,6 +24,9 @@ class ViewServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        Facades\View::composer('contacts', ContactComposer::class);
+        Inertia::share('contactCount', function(ContactRepositoryInterface $contactReporitory ) {
+            return $contactReporitory->getAll()->count();
+        }
+        );
     }
 }

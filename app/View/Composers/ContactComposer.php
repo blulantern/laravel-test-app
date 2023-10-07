@@ -11,7 +11,7 @@ class ContactComposer
      * Create a new profile composer.
      */
     public function __construct(
-        protected ContactRepository $contacts,
+        // protected ContactRepository $contacts,
     ) {}
  
     /**
@@ -19,6 +19,6 @@ class ContactComposer
      */
     public function compose(Inertia $inertia): void
     {
-        $inertia->share('contactCount', $this->contacts->count());
+        // $inertia->share('contactCount', $this->contacts->count());
     }
 }

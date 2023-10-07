@@ -1,46 +1,89 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import Checkbox from '@/Components/Checkbox.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import TextInput from '@/Components/TextInput.vue';
+import { Head, useForm } from '@inertiajs/vue3';
 import axios from 'axios';
 
 const props = defineProps(['contacts', 'contactCount']);
+
+const form = useForm({
+    name:'',
+    email:'',
+    phone:'',
+    address:'',
+    city:'',
+    region_state:'',
+    country:'',
+    zip:''
+});
+
+const submit = () => {
+    form.post(route('contact.store'), {
+        onFinish: () => forceRerender(),
+    });
+};
 </script>
 
 <template>
     <Head title="Contacts" />
 
-    <div>{{contactCount}}</div>
+    <div v-if="contactCount">Contact Count: {{ contactCount }}</div>
     <div class="py-12">
         <form @submit.prevent="submit">
             <div>
-                <input type="text" name="name" placeholder="name" v-model="store.name" />
+                <InputLabel for="name" value="Name" />
+                <TextInput type="text" name="name" placeholder="name" v-model="form.name" />
             </div>
             <div>
-                <input type="email" name="email" placeholder="email" v-model="store.email" />
+                <InputLabel for="email" value="Email" />
+                <TextInput type="email" name="email" placeholder="email" v-model="form.email" />
             </div>
             <div>
-                <input type="text" name="phone" placeholder="phone" v-model="store.phone" />
+                <InputLabel for="phone" value="Phone" />
+                <TextInput type="text" name="phone" placeholder="phone" v-model="form.phone" />
             </div>
             <div>
-                <input type="text" name="address" placeholder="address" v-model="store.address" />
+                <InputLabel for="address" value="Address" />
+                <TextInput type="text" name="address" placeholder="address" v-model="form.address" />
             </div>
             <div>
-                <input type="text" name="city" placeholder="city" v-model="store.city" />
+                <InputLabel for="city" value="City" />
+                <TextInput type="text" name="city" placeholder="city" v-model="form.city" />
             </div>
             <div>
-                <input type="text" name="region_state" placeholder="state" v-model="store.region_state" />
+                <InputLabel for="statee" value="State" />
+                <TextInput type="text" name="region_state" placeholder="state" v-model="form.region_state" maxlength="2" />
             </div>
             <div>
-                <input type="text" name="country" placeholder="country" v-model="store.country" />
+                <InputLabel for="country" value="Country" />
+                <TextInput type="text" name="country" placeholder="country" v-model="form.country" />
             </div>
             <div>
-                <input type="text" name="zip" placeholder="zip" v-model="store.zip" />
+                <InputLabel for="zip" value="Zip Code" />
+                <TextInput type="text" name="zip" placeholder="zip" v-model="form.zip" />
             </div>
-            <button type="submit">Submit</button>
+            <PrimaryButton>
+                    Log in
+            </PrimaryButton>
         </form>
     </div>
 
     <table>
-        <tr :key="componentKey" v-for="contact in contacts">
+        <thead>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Region/State</th>
+            <th>Country</th>
+            <th>Zip</th>
+        </thead>
+        <tr v-for="contact in contacts">
             <td>{{ contact.name }}</td>
             <td>{{ contact.email }}</td>
             <td>{{ contact.phone }}</td>
@@ -49,40 +92,41 @@ const props = defineProps(['contacts', 'contactCount']);
             <td>{{ contact.region_state }}</td>
             <td>{{ contact.country }}</td>
             <td>{{ contact.zip }}</td>
+            <td></td>
         </tr>
     </table>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      store: {
-        name:'',
-        email:'',
-        phone:'',
-        address:'',
-        city:'',
-        region_state:'',
-        country:'',
-        zip:''
-      },
-      componentKey: 0,
-    }
-  },
-  methods: {
-    submit: async function() {
-        await axios.post('contacts', this.store)
-        .then(function(res) {
-            forceRerender();
-        })
-        .catch(function(err) {
-            console.log(err);
-        });
-    },
-    forceRerender(){
-        this.componentKey += 1;
-    }
-  }
-}
+// export default {
+//   data() {
+//     return {
+//       store: {
+//         name:'',
+//         email:'',
+//         phone:'',
+//         address:'',
+//         city:'',
+//         region_state:'',
+//         country:'',
+//         zip:''
+//       },
+//       //componentKey: 0,
+//     }
+//   },
+//   methods: {
+//     submit: async function() {
+//         await axios.post('contacts', this.store)
+//         .then(function(res) {
+//             forceRerender();
+//         })
+//         .catch(function(err) {
+//             console.log(err);
+//         });
+//     },
+//     forceRerender(){
+//         this.componentKey += 1;
+//     }
+//   }
+// }
 </script>

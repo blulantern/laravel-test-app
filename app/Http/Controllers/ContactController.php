@@ -46,15 +46,15 @@ class ContactController extends Controller
     public function store(ContactRequest $request)
     {
         $validated = $request->validated();
-        return $this->contactRepository->create($request->all());
+        $this->contactRepository->create($request->all());
+        return redirect('/contacts');
     }
 
     public function update(ContactRequest $request)
     {
         $validated = $request->validated();
-        $contactId = $request->route('id');
-        $this->contactRepository->update($request->id, $request->all());
-
-        return redirect('/contacts');
+        $id = $request->route('id');
+        $this->contactRepository->update($id, $request->all());
+        return redirect('/contacts/'.$id);
     }
 }
